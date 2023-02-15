@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import {
@@ -7,12 +7,14 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerContext } from "../../services/burger-context";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 
-function BurgerConstructor({ data }) {
+function BurgerConstructor() {
+  const data = useContext(BurgerContext);
   const [modalActive, setModalActive] = useState(false);
-  const bun = data[0];
+  const bun = data.filter((item) => item.type == "bun")[0];
   const ingredients = data.filter((item) => item.type !== "bun");
   const summTotal = ingredients.reduce(
     (sum, ingredient) => sum + ingredient.price,
@@ -98,7 +100,7 @@ BurgerConstructor.propTypes = {
       image_mobile: PropTypes.string.isRequired,
       image_large: PropTypes.string.isRequired,
       __v: PropTypes.number.isRequired,
-    })
+    }).isRequired
   ),
 };
 

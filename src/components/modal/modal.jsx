@@ -6,19 +6,17 @@ import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
 function Modal({ active, setActive, id, children }) {
-
-  const closeModal = useCallback(
-     () => {
-      setActive(false);
-    },[setActive]
-  )
+  const closeModal = useCallback(() => {
+    setActive(false);
+  }, [setActive]);
 
   const escButtonHandler = useCallback(
     (e) => {
       if (e.key === "Escape") {
         closeModal();
       }
-    },[closeModal]
+    },
+    [closeModal]
   );
 
   useEffect(() => {
@@ -32,24 +30,27 @@ function Modal({ active, setActive, id, children }) {
     <>
       <ModalOverlay isActive={active} onClose={closeModal} />
       <div className={active ? styles.modalActive : styles.modal}>
-      <div className="flex justify-between items-center px-7 pt-10">
+        <div className="flex justify-between items-center px-7 pt-10">
           <div>
-            <p className={id ? styles.modalTitle : styles.modalTitleHide}>Детали ингридиента</p>
+            <p className={id ? styles.modalTitle : styles.modalTitleHide}>
+              Детали ингридиента
+            </p>
           </div>
-        <div onClick={closeModal} className="flex justify-end">
-          <CloseIcon type="primary" />
+          <div onClick={closeModal} className="flex justify-end">
+            <CloseIcon type="primary" />
+          </div>
         </div>
-      </div>
         {children}
       </div>
-    </>,document.getElementById("modal")
+    </>,
+    document.getElementById("modal")
   );
 }
 
 Modal.propTypes = {
   id: PropTypes.string,
   active: PropTypes.bool.isRequired,
-  children:PropTypes.object.isRequired,
-  setActive: PropTypes.func.isRequired
+  children: PropTypes.element.isRequired,
+  setActive: PropTypes.func.isRequired,
 };
 export default Modal;
