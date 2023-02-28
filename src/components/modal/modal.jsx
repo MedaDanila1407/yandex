@@ -1,56 +1,45 @@
-import { useEffect, useCallback } from "react";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
-import styles from "./modal.module.css";
-import ModalOverlay from "../modal-overlay/modal-overlay";
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import ModalOverlay from '../modal-overlay/modal-overlay';
+import styles from './modal.module.css';
+import PropTypes from 'prop-types';
 
-function Modal({ active, setActive, id, children }) {
-  const closeModal = useCallback(() => {
-    setActive(false);
-  }, [setActive]);
+const modalRoot = document.getElementById('react-modals');
 
-  const escButtonHandler = useCallback(
-    (e) => {
-      if (e.key === "Escape") {
+const Modal = ({ children, title, closeModal }) => {
+  useEffect(() => {
+    const escHendler = evt => {
+      if (evt.key === 'Escape') {
         closeModal();
       }
-    },
-    [closeModal]
-  );
-
-  useEffect(() => {
-    document.addEventListener("keydown", escButtonHandler);
-    return () => {
-      document.removeEventListener("keydown", escButtonHandler);
     };
-  }, [escButtonHandler]);
+    document.addEventListener('keydown', escHendler);
+    return () => {
+      document.removeEventListener('keydown', escHendler);
+    };
+  }, [closeModal]);
 
-  return ReactDOM.createPortal(
-    <>
-      <ModalOverlay isActive={active} onClose={closeModal} />
-      <div className={active ? styles.modalActive : styles.modal}>
-        <div className="flex justify-between items-center px-7 pt-10">
-          <div>
-            <p className={id ? styles.modalTitle : styles.modalTitleHide}>
-              Детали ингридиента
-            </p>
-          </div>
-          <div onClick={closeModal} className="flex justify-end">
+  return createPortal(
+    <ModalOverlay closeModal={closeModal}>
+      <div className={`${styles.wrapper} p-10`} onClick={e => e.stopPropagation()}>
+        <div className={styles.header}>
+          <h2 className="text text_type_main-large">{title}</h2>
+          <button className="btn-default" onClick={closeModal}>
             <CloseIcon type="primary" />
-          </div>
+          </button>
         </div>
         {children}
       </div>
-    </>,
-    document.getElementById("modal")
+    </ModalOverlay>,
+    modalRoot
   );
-}
+};
 
 Modal.propTypes = {
-  id: PropTypes.string,
-  active: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired,
-  setActive: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string,
+  closeModal: PropTypes.func.isRequired
 };
+
 export default Modal;

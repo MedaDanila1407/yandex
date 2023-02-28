@@ -1,30 +1,24 @@
-import doneImg from "../../images/done.svg";
-import PropTypes from "prop-types";
-import styles from './order-details.module.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './order-details.module.css';
+import doneImg from '../../images/done.png';
 
-function OrderDetails() {
+const OrderDetails = ({ orderNumber }) => {
   return (
-    <>
-      { (
-        <div>
-          <div className="flex flex-col justify-center items-center">
-            <span className={styles.modalDoneId}>034536</span>
-            <p className={styles.modalDoneIdTitle}>идентификатор заказа</p>
-            <div className="modal-done_img">
-            <img src={doneImg} alt="" className={styles.modalDone} />
-            </div>
-            <p className={styles.modalDoneCocked}>Ваш заказ начали готовить</p>
-            <p className={styles.modalDoneWait}>
-              Дождитесь готовности на орбитальной станции
-            </p>
-          </div>
-        </div>
-      )}
-    </>
+    <div className={styles.wrapper}>
+      <h2 className="text text_type_digits-large mb-8">{orderNumber}</h2>
+      <p className="text text_type_main-medium">идентификатор заказа</p>
+      <img src={doneImg} alt="готово" className="mt-15 mb-15" />
+      <p className="text text_type_main-small mb-2">Ваш заказ начали готовить</p>
+      <p className="text text_type_main-small text_color_inactive">
+        Дождитесь готовности на орбитальной станции
+      </p>
+    </div>
   );
-}
-OrderDetails.propType={
-  isActive: PropTypes.bool.isRequired,
-  styles:PropTypes.string.isRequired
-}
+};
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired
+};
+
 export default OrderDetails;

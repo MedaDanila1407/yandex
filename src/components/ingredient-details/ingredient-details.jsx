@@ -1,61 +1,36 @@
-import PropTypes from "prop-types";
-import styles from "./ingredient-details.module.css";
+import React from 'react';
+import { ingredientType } from '../../utils/types';
+import styles from './ingredient-details.module.css';
 
-export default function IngredientDetails(item) {
-  const itemData = item.item;
-  console.log(itemData);
+const IngredientDetails = ({ data }) => {
   return (
-    <section key={itemData._id}>
-      <div className="modal-content grid px-8 pt-8">
-        <div className="flex flex-col justify-center">
-          <img src={itemData.image_large} alt={itemData.name} />
-          <div className="flex justify-center">
-            <p className={styles.modalIngrTitle}>{itemData.name}</p>
-          </div>
-          <div className="flex justify-around pt-6">
-            <div className="flex flex-col items-center">
-              <p className={styles.modalIngrElems}>Каллории, ккал.</p>
-              <span className={styles.modalIngrWeight}>
-                {itemData.calories}{" "}
-              </span>
-            </div>
-            <div className="flex flex-col items-center">
-              <p className={styles.modalIngrElems}>Белки, г.</p>
-              <span className={styles.modalIngrWeight}>
-                {itemData.proteins}{" "}
-              </span>
-            </div>
-            <div className="flex flex-col items-center">
-              <p className={styles.modalIngrElems}>Жиры, г.</p>
-              <span className={styles.modalIngrWeight}>{itemData.fat} </span>
-            </div>
-            <div className="flex flex-col items-center">
-              <p className={styles.modalIngrElems}>Углеводы, г.</p>
-              <span className={styles.modalIngrWeight}>
-                {itemData.carbohydrates}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div className={styles.wrapper}>
+      <img src={data.image_large} className="pr-5 pl-5" alt={data.name} />
+      <h3 className="text text_type_main-medium mt-4 mb-8">{data.name}</h3>
+      <ul className={`${styles.value} list-default`}>
+        <li className={styles.value__item}>
+          <h4 className="text text_type_main-default text_color_inactive">Калории,ккал</h4>
+          <p className="text text_type_digits-default text_color_inactive">{data.calories}</p>
+        </li>
+        <li className={styles.value__item}>
+          <h4 className="text text_type_main-default text_color_inactive">Белки, г</h4>
+          <p className="text text_type_digits-default text_color_inactive">{data.proteins}</p>
+        </li>
+        <li className={styles.value__item}>
+          <h4 className="text text_type_main-default text_color_inactive">Жиры, г</h4>
+          <p className="text text_type_digits-default text_color_inactive">{data.fat}</p>
+        </li>
+        <li className={styles.value__item}>
+          <h4 className="text text_type_main-default text_color_inactive">Углеводы, г</h4>
+          <p className="text text_type_digits-default text_color_inactive">{data.carbohydrates}</p>
+        </li>
+      </ul>
+    </div>
   );
-}
-IngredientDetails.propTypes = {
-  itemData: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-    }).isRequired
-  ),
 };
+
+IngredientDetails.propTypes = {
+  data: ingredientType.isRequired
+};
+
+export default IngredientDetails;

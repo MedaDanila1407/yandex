@@ -1,29 +1,20 @@
-.modal {
-    top: 0;
-    left: 0;
-    opacity: 0;
-    pointer-events:none;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.modalActive{
-    background-color:#1C1C21;
-    top: 0;
-    left: 0;
-    opacity: 1;
-    width:750px;
-    height:600px;
-    border-radius: 40px;
+
+.value {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
 }
-.modalIngrTitle{
-    font-family: 'JetBrainsMono-Regular';
-    font-size: 28px;
-}
-.modalIngrElems {
-    font-family: 'JetBrainsMono-Regular';
-    font-size: 16px;
-    color:#8585AD;
-}
-.modalIngrWeight{
-    font-family: 'Iceland';
-    font-size: 28px;
-    color:#8585AD;
+
+.value__item {
+  display: flex;
+  min-width: 118px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
