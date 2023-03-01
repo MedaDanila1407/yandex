@@ -1,40 +1,47 @@
-import React, { useMemo, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useDrop } from 'react-dnd';
-import update from 'immutability-helper';
+import React, { useMemo, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
+import update from "immutability-helper";
 import {
   CurrencyIcon,
   Button,
-  ConstructorElement
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import { addItem, addBun, updateConstructor } from '../../services/actions/constructor';
-import { createOrder } from '../../services/actions/order';
+  ConstructorElement,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  addItem,
+  addBun,
+  updateConstructor,
+} from "../../services/actions/constructor";
+import { createOrder } from "../../services/actions/order";
 
-import ConstructorItem from '../constructor-item/constructor-item';
-import Loader from '../loader/loader';
+import ConstructorItem from "../constructor-item/constructor-item";
+import Loader from "../loader/loader";
 
-import styles from './burger-constructor.module.css';
-import itemStyles from '../constructor-item/constructor-item.module.css';
+import styles from "./burger-constructor.module.css";
+import itemStyles from "../constructor-item/constructor-item.module.css";
 
 const BurgerConstructor = () => {
-  const data = useSelector(store => store.constructorData.constructorItems);
-  const isLoading = useSelector(store => store.orderData.createOrderRequest);
+  const data = useSelector((store) => store.constructorData.constructorItems);
+  const isLoading = useSelector((store) => store.orderData.createOrderRequest);
   const dispatch = useDispatch();
 
-  const openOrderModal = e => {
+  const openOrderModal = (e) => {
     e.preventDefault();
-    const dataIds = data.map(item => [item._id]);
+    const dataIds = data.map((item) => item._id);
+    dataIds.push(dataIds[0]);
     dispatch(createOrder(dataIds));
   };
 
   const [{ isOver }, dropRef] = useDrop({
-    accept: 'ingredient',
+    accept: "ingredient",
     drop(newItem) {
-      newItem.type === 'bun' ? dispatch(addBun(newItem)) : dispatch(addItem(newItem));
+      newItem.type === "bun"
+        ? dispatch(addBun(newItem))
+        : dispatch(addItem(newItem));
     },
-    collect: monitor => ({
-      isOver: monitor.isOver()
-    })
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
   });
 
   const moveItemHandler = useCallback(
@@ -43,8 +50,8 @@ const BurgerConstructor = () => {
       const newData = update(data, {
         $splice: [
           [dragIndex, 1],
-          [hoverIndex, 0, dragCard]
-        ]
+          [hoverIndex, 0, dragCard],
+        ],
       });
       dispatch(updateConstructor(newData));
     },
@@ -53,18 +60,20 @@ const BurgerConstructor = () => {
 
   const getPrice = useMemo(() => {
     return Array.from(data).reduce((acc, i) => {
-      return i.type === 'bun' ? acc + i.price * 2 : acc + i.price;
+      return i.type === "bun" ? acc + i.price * 2 : acc + i.price;
     }, 0);
   }, [data]);
 
   return (
     <section
-      className={`${styles.wrapper} ${isOver && styles.wrapper_isOver} mt-20 pl-4`}
+      className={`${styles.wrapper} ${
+        isOver && styles.wrapper_isOver
+      } mt-20 pl-4`}
       ref={dropRef}
     >
-      {data.map(item => {
+      {data.map((item) => {
         return (
-          item.type === 'bun' && (
+          item.type === "bun" && (
             <div className={itemStyles.wrapper} key={item._id}>
               <ConstructorElement
                 isLocked={true}
@@ -80,8 +89,8 @@ const BurgerConstructor = () => {
       <ul className={`${styles.list} list-default my-scroll pr-2`}>
         {data.map(
           (item, i) =>
-            item.type !== 'bun' && (
-              <li key={`${item.uuid}`}>
+            item.type !== "bun" && (
+              <li key={item._id}>
                 <ConstructorItem
                   data={item}
                   id={item._id}
@@ -92,9 +101,9 @@ const BurgerConstructor = () => {
             )
         )}
       </ul>
-      {data.map(item => {
+      {data.map((item) => {
         return (
-          item.type === 'bun' && (
+          item.type === "bun" && (
             <div className={itemStyles.wrapper} key={item._id}>
               <ConstructorElement
                 isLocked={true}
@@ -118,7 +127,7 @@ const BurgerConstructor = () => {
             extraClass={`${styles.button} ml-10 mr-4`}
             onClick={openOrderModal}
           >
-            {isLoading ? <Loader /> : 'Оформить заказ'}
+            {isLoading ? <Loader /> : "Оформить заказ"}
           </Button>
         </div>
       )}
