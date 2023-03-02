@@ -7,14 +7,14 @@ export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR'; //ОЧИСТИТЬ КОН�
 export const addItem = data => {
   return {
     type: ADD_CONSTRUCTOR_ITEM,
-    payload: data
+    payload: { ...data, constructorId: crypto.randomUUID() }
   };
 };
 
 export const addBun = data => {
   return {
     type: ADD_CONSTRUCTOR_BUN,
-    payload: data
+    payload: { ...data, constructorId: crypto.randomUUID() }
   };
 };
 

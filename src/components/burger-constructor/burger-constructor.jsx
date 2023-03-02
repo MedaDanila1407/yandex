@@ -27,8 +27,19 @@ const BurgerConstructor = () => {
 
   const openOrderModal = (e) => {
     e.preventDefault();
-    const dataIds = data.map((item) => item._id);
-    dataIds.push(dataIds[0]);
+    const dataIds = [];
+    let itemBun = undefined;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].type == "bun") {
+        itemBun = data[i]._id;
+      } else {
+        dataIds.push(data[i]._id);
+      }
+    }
+    if (itemBun != undefined) {
+      dataIds.unshift(itemBun);
+      dataIds.push(itemBun);
+    }
     dispatch(createOrder(dataIds));
   };
 
@@ -90,7 +101,7 @@ const BurgerConstructor = () => {
         {data.map(
           (item, i) =>
             item.type !== "bun" && (
-              <li key={item._id}>
+              <li key={item.constructorId}>
                 <ConstructorItem
                   data={item}
                   id={item._id}
