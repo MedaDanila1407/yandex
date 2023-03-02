@@ -127,20 +127,23 @@ const BurgerConstructor = () => {
           )
         );
       })}
-      {data.length > 0 && (
-        <div className={`${styles.checkout} mt-6`}>
-          <p className="text text_type_digits-medium mr-2">{getPrice}</p>
-          <CurrencyIcon type="primary" />
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            extraClass={`${styles.button} ml-10 mr-4`}
-            onClick={openOrderModal}
-          >
-            {isLoading ? <Loader /> : "Оформить заказ"}
-          </Button>
-        </div>
+      {data.map(
+        (item) =>
+          item.type == "bun" && (
+            <div className={`${styles.checkout} mt-6`}>
+              <p className="text text_type_digits-medium mr-2">{getPrice}</p>
+              <CurrencyIcon type="primary" />
+              <Button
+                htmlType="button"
+                type="primary"
+                size="large"
+                extraClass={`${styles.button} ml-10 mr-4`}
+                onClick={openOrderModal}
+              >
+                {isLoading ? <Loader /> : "Оформить заказ"}
+              </Button>
+            </div>
+          )
       )}
     </section>
   );
