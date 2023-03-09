@@ -1,27 +1,33 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
-import styles from '../forgot-password/forgot-password.module.css';
-import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { resetPassword } from '../../services/action-creators/userActionCreators';
-import { useForm } from '../../hooks/useForm';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import styles from "../forgot-password/forgot-password.module.css";
+import {
+  Input,
+  PasswordInput,
+  Button,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { resetPassword } from "../../services/action-creators/userActionCreators";
+import { useForm } from "../../hooks/useForm";
 
 export const ResetPasswordPage = () => {
   const dispatch = useDispatch();
   const { values, handleChange } = useForm({
-    newPassword: '',
-    resetPasswordCode: ''
+    newPassword: "",
+    resetPasswordCode: "",
   });
 
-  const isResettingPassword = useSelector(store => store.userReducer.isResettingPassword);
+  const isResettingPassword = useSelector(
+    (store) => store.userReducer.isResettingPassword
+  );
 
-  const handleResetPasswordRequest = e => {
+  const handleResetPasswordRequest = (e) => {
     e.preventDefault();
     dispatch(resetPassword(values.newPassword, values.resetPasswordCode));
   };
 
   if (!isResettingPassword) {
-    return <Navigate to={{ pathname: '/forgot-password' }} />;
+    return <Navigate to={{ pathname: "/login" }} />;
   }
 
   return (
@@ -31,17 +37,20 @@ export const ResetPasswordPage = () => {
           Восстановление пароля
         </h2>
         <div className="pt-6 pb-20">
-          <form className={styles.loginFormBody} onSubmit={handleResetPasswordRequest}>
+          <form
+            className={styles.loginFormBody}
+            onSubmit={handleResetPasswordRequest}
+          >
             <PasswordInput
-              placeholder={'Введите новый пароль'}
-              name={'newPassword'}
+              placeholder={"Введите новый пароль"}
+              name={"newPassword"}
               onChange={handleChange}
               value={values.newPassword}
             />
             <Input
-              type={'text'}
-              placeholder={'Введите код из письма'}
-              name={'resetPasswordCode'}
+              type={"text"}
+              placeholder={"Введите код из письма"}
+              name={"resetPasswordCode"}
               onChange={handleChange}
               value={values.resetPasswordCode}
             />
@@ -50,7 +59,9 @@ export const ResetPasswordPage = () => {
             </Button>
           </form>
         </div>
-        <p className={`${styles.password} text text_type_main-default text_color_inactive`}>
+        <p
+          className={`${styles.password} text text_type_main-default text_color_inactive`}
+        >
           Вспомнили пароль? <Link to="/login">Войти</Link>
         </p>
       </div>

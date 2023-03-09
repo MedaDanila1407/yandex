@@ -120,7 +120,6 @@ export const refreshToken = () => {
 
 export const forgotPassword = email => {
   const requestUrl = baseUrl + '/password-reset';
-
   return function (dispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST
@@ -192,6 +191,7 @@ export const logout = () => {
       body: JSON.stringify({ token: localStorage.getItem('refreshToken') ?? '' })
     })
       .then(responseData => {
+        setCookie('accessToken', null);
         dispatch({
           type: LOGOUT_SUCCESS
         });
@@ -216,6 +216,7 @@ export const getUser = () => {
     requestWithRefresh(requestUrl, {
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + getCookie('accessToken')
       }
     })
@@ -245,6 +246,7 @@ export const updateUser = (name, email, password) => {
     requestWithRefresh(requestUrl, {
       method: 'PATCH',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + getCookie('accessToken')
       },
       body: JSON.stringify({ name: name, email: email, password: password })

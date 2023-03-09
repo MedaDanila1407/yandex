@@ -1,4 +1,5 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_ERROR,
+import {
+  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_ERROR,
   REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_ERROR,
   REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_ERROR,
   FORGOT_PASSWORD_REQUEST, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_ERROR,
@@ -13,13 +14,14 @@ const initialState = {
   userLogin: null,
   isAuthenticated: false,
   isResettingPassword: false,
+  isRegistration: false,
   isLoading: false,
   error: ''
 }
 
-export const userReducer = (state = initialState, action ) => {
+export const userReducer = (state = initialState, action) => {
 
-  switch(action.type) {
+  switch (action.type) {
 
     case LOGIN_REQUEST: {
       return {
@@ -58,6 +60,7 @@ export const userReducer = (state = initialState, action ) => {
       return {
         ...state,
         isLoading: false,
+        isRegistration: true,
         error: ''
       }
     }
@@ -66,6 +69,7 @@ export const userReducer = (state = initialState, action ) => {
       return {
         ...state,
         isLoading: false,
+        isRegistration: false,
         error: 'Ошибка при регистрации'
       }
     }
