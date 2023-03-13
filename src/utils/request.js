@@ -5,24 +5,27 @@ export function request(url, options) {
   return fetch(url, options).then(checkResponse);
 }
 
-function checkResponse(res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`);
+const checkResponse = (res) => {
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 }
 
-export const refreshToken = () => {
-  return fetch(baseUrl + '/auth/token', {
+const saveTokens = (refreshToken, accessToken) => {
+  setCookie('accessToken', accessToken);
+  localStorage.setItem('refreshToken', refreshToken);
+}
+
+export const refreshTokenRequest = () => {
+  return fetch(baseUrl + `/auth/token`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json;charset=utf-8'
     },
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken')
     })
-  }).then(checkResponse);
-};
+  })
+    .then(checkResponse)
+}
 
 export const requestWithRefresh = async (url, options) => {
   try {
@@ -30,13 +33,9 @@ export const requestWithRefresh = async (url, options) => {
     return await checkResponse(res);
   } catch (err) {
     if (err.message === 'jwt expired') {
-      const refreshData = await refreshToken();
-      if (!refreshData.success) {
-        return Promise.reject(refreshData);
-      }
-      localStorage.setItem('refreshToken', refreshData.refreshToken);
-      setCookie('accessToken', refreshData.accessToken);
-      options.headers.authorization = refreshData.accessToken;
+      const { refreshToken, accessToken } = await refreshTokenRequest();
+      saveTokens(refreshToken, accessToken);
+      options.headers.authorization = accessToken;
       const res = await fetch(url, options);
       return await checkResponse(res);
     } else {
