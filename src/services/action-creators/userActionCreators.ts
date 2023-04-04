@@ -1,4 +1,4 @@
-import { baseUrl } from '../../utils/api';
+import { BASE_URL } from '../../utils/api';
 import { getCookie, setCookie } from '../../utils/cookies';
 import { request, requestWithRefresh } from '../../utils/request';
 import {
@@ -27,9 +27,10 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR
 } from '../actions/userActions';
+import { TAppThunk } from '../types';
 
-export const login = (email, password) => {
-  const requestUrl = baseUrl + '/auth/login';
+export const login = (email: string, password: string): TAppThunk => {
+  const requestUrl = BASE_URL + '/auth/login';
 
   return function (dispatch) {
     dispatch({
@@ -64,8 +65,8 @@ export const login = (email, password) => {
   };
 };
 
-export const register = (email, password, name) => {
-  const requestUrl = baseUrl + '/auth/register';
+export const register = (email: string, password: string, name: string): TAppThunk => {
+  const requestUrl = BASE_URL + '/auth/register';
 
   return function (dispatch) {
     dispatch({
@@ -94,8 +95,8 @@ export const register = (email, password, name) => {
   };
 };
 
-export const refreshToken = () => {
-  const requestUrl = baseUrl + '/auth/token';
+export const refreshToken = (): TAppThunk => {
+  const requestUrl = BASE_URL + '/auth/token';
 
   return function (dispatch) {
     dispatch({
@@ -118,8 +119,9 @@ export const refreshToken = () => {
   };
 };
 
-export const forgotPassword = email => {
-  const requestUrl = baseUrl + '/password-reset';
+export const forgotPassword = (email: string): TAppThunk => {
+  const requestUrl = BASE_URL + '/password-reset';
+
   return function (dispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST
@@ -146,8 +148,8 @@ export const forgotPassword = email => {
   };
 };
 
-export const resetPassword = (newPassword, resetPasswordCode) => {
-  const requestUrl = baseUrl + '/password-reset/reset';
+export const resetPassword = (newPassword: string, resetPasswordCode: string): TAppThunk => {
+  const requestUrl = BASE_URL + '/password-reset/reset';
 
   return function (dispatch) {
     dispatch({
@@ -175,8 +177,8 @@ export const resetPassword = (newPassword, resetPasswordCode) => {
   };
 };
 
-export const logout = () => {
-  const requestUrl = baseUrl + '/auth/logout';
+export const logout = (): TAppThunk => {
+  const requestUrl = BASE_URL + '/auth/logout';
 
   return function (dispatch) {
     dispatch({
@@ -191,7 +193,6 @@ export const logout = () => {
       body: JSON.stringify({ token: localStorage.getItem('refreshToken') ?? '' })
     })
       .then(responseData => {
-        setCookie('accessToken', null);
         dispatch({
           type: LOGOUT_SUCCESS
         });
@@ -205,8 +206,8 @@ export const logout = () => {
   };
 };
 
-export const getUser = () => {
-  const requestUrl = baseUrl + '/auth/user';
+export const getUser = (): TAppThunk => {
+  const requestUrl = BASE_URL + '/auth/user';
 
   return function (dispatch) {
     dispatch({
@@ -217,7 +218,7 @@ export const getUser = () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + getCookie('accessToken')
+        'Authorization': 'Bearer ' + getCookie('accessToken')
       }
     })
       .then(responseData => {
@@ -235,8 +236,8 @@ export const getUser = () => {
   };
 };
 
-export const updateUser = (name, email, password) => {
-  const requestUrl = baseUrl + '/auth/user';
+export const updateUser = (name: string, email: string): TAppThunk => {
+  const requestUrl = BASE_URL + '/auth/user';
 
   return function (dispatch) {
     dispatch({
@@ -247,9 +248,9 @@ export const updateUser = (name, email, password) => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + getCookie('accessToken')
+        'Authorization': 'Bearer ' + getCookie('accessToken')
       },
-      body: JSON.stringify({ name: name, email: email, password: password })
+      body: JSON.stringify({ 'name': name, 'email': email })
     })
       .then(responseData => {
         dispatch({
