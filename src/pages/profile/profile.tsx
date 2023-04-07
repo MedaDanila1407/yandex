@@ -1,27 +1,43 @@
-import React, { useState, useEffect, FC } from 'react';
-import styles from './profile.module.css';
-import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { logout, updateUser } from '../../services/action-creators/userActionCreators';
-import { useForm, useAppDispatch, useAppSelector } from '../../hooks/useForm';
+import React, { useState, useEffect, FC } from "react";
+import styles from "./profile.module.css";
+import {
+  Button,
+  Input,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  logout,
+  updateUser,
+} from "../../services/action-creators/userActionCreators";
+import { useForm } from "../../hooks/useForm";
+import { useAppDispatch, useAppSelector } from "../../services/types/index";
+import { NavLink, useRouteMatch } from "react-router-dom";
 
 type FormStateType = {
-  name: string;
-  email: string;
+  name: string | null;
+  email: string | null;
 };
 
 export const ProfilePage: FC = () => {
   const initialFormState: FormStateType = {
-    name: '',
-    email: ''
+    name: "",
+    email: "",
   };
+
+  const { url } = useRouteMatch();
+
   const dispatch = useAppDispatch();
-  const { userName, userLogin, isLoading, error } = useAppSelector(store => store.userReducer);
-  const { values, handleChange, setValues } = useForm<FormStateType>(initialFormState);
+
+  const { userName, userLogin, isLoading, error } = useAppSelector(
+    (store) => store.userReducer
+  );
+
+  const { values, handleChange, setValues } =
+    useForm<FormStateType>(initialFormState);
 
   useEffect(() => {
     setValues({
       name: userName,
-      email: userLogin
+      email: userLogin,
     });
   }, [userName, userLogin, setValues]);
 
@@ -39,6 +55,7 @@ export const ProfilePage: FC = () => {
 
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
+    //@ts-ignore
     dispatch(updateUser(values.name, values.email));
   };
 
@@ -47,7 +64,7 @@ export const ProfilePage: FC = () => {
     setValues({
       ...values,
       name: userName,
-      email: userLogin
+      email: userLogin,
     });
     setDataChanged(false);
   };
@@ -56,15 +73,23 @@ export const ProfilePage: FC = () => {
     return <h1>Загрузка</h1>;
   }
 
-  if (!isLoading && error.length > 0) {
+  if (!isLoading && error && error.length > 0) {
     return <h1>Ошибка</h1>;
   }
 
   return (
     <main className={styles.profileMain}>
       <section className={styles.profileMenu}>
-        <p className="text text_type_main-medium pt-4 pb-4">Профиль</p>
-        <p className="text text_type_main-medium pt-4 pb-4 text_color_inactive">История заказов</p>
+        <p className="text text_type_main-medium pt-4 pb-4">
+          <NavLink to={url} exact={true}>
+            Профиль
+          </NavLink>
+        </p>
+        <p className="text text_type_main-medium pt-4 pb-4 text_color_inactive">
+          <NavLink to={`${url}/orders`} exact={true}>
+            История заказов
+          </NavLink>
+        </p>
         <a href="/">
           <p
             className="text text_type_main-medium pt-4 pb-4 text_color_inactive"
@@ -82,32 +107,38 @@ export const ProfilePage: FC = () => {
       <section>
         <form className={styles.profileFields} onSubmit={handleSaveProfile}>
           <Input
-            type={'text'}
-            placeholder={'Имя'}
+            type={"text"}
+            placeholder={"Имя"}
             onChange={onChange}
-            icon={'EditIcon'}
+            icon={"EditIcon"}
+            //@ts-ignore
             value={values.name}
-            name={'name'}
+            name={"name"}
           />
           <Input
-            type={'email'}
-            placeholder={'Логин'}
+            type={"email"}
+            placeholder={"Логин"}
             onChange={onChange}
-            icon={'EditIcon'}
+            icon={"EditIcon"}
+            //@ts-ignore
             value={values.email}
-            name={'email'}
+            name={"email"}
           />
           <Input
-            type={'password'}
-            placeholder={'Пароль'}
+            type={"password"}
+            placeholder={"Пароль"}
             onChange={onChange}
-            icon={'EditIcon'}
-            value={''}
-            name={'password'}
+            icon={"EditIcon"}
+            value={""}
+            name={"password"}
           />
           {dataChanged && (
             <div className={styles.profileButtons}>
-              <a href="/" className={styles.cancelButton} onClick={handleCancelChanges}>
+              <a
+                href="/"
+                className={styles.cancelButton}
+                onClick={handleCancelChanges}
+              >
                 Отмена
               </a>
               <Button htmlType="submit" type="primary" size="medium">

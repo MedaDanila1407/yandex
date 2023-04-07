@@ -217,7 +217,6 @@ export const getUser = (): TAppThunk => {
     requestWithRefresh(requestUrl, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + getCookie('accessToken')
       }
     })
@@ -247,7 +246,6 @@ export const updateUser = (name: string, email: string): TAppThunk => {
     requestWithRefresh(requestUrl, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + getCookie('accessToken')
       },
       body: JSON.stringify({ 'name': name, 'email': email })
