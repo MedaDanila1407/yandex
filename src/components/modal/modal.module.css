@@ -3,18 +3,19 @@
   background: #1c1c21;
   box-sizing: border-box;
   border-radius: 40px;
+  padding: 40px;
   position: relative;
 }
 
 .headerContainer {
   display: flex;
   align-items: center;
+  width: 720px;
   height: 64px;
 }
 
 .closeModalButton {
   position: absolute;
-  top: 60px;
   right: 40px;
   cursor: pointer;
 }
