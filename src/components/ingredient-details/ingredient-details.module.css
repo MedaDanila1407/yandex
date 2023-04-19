@@ -1,20 +1,23 @@
-.wrapper {
+.container {
+  width: 520px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.value {
-  display: flex;
+.items {
   gap: 20px;
+  width: 100%;
+  display: flex;
   justify-content: space-between;
-  align-items: flex-start;
 }
 
-.value__item {
-  display: flex;
-  min-width: 118px;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+.item {
+  text-align: center;
+  flex: 1;
+}
+
+.name {
+  text-align: center;
 }
