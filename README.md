@@ -1,46 +1,63 @@
-# Getting Started with Create React App
+# Проект: Stellar Burgers (Космическая бургерная)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### О проекте
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+##### Проект представляет собой страницу оформления заказа в бургерной Stellar Burgers. Страница выполнена в виде приложения-конструктора, позволяющего пользователю самостоятельно выбрать ингредиенты для бургера.
 
-### `npm start`
+В хэдере располагается панель навигации c ссылками для перехода в другие разделы сайта. Основной раздел страницы представлен 2 секциями: список доступных ингредиентов и состав заказа.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Список доступных ингредиентов разделен на категории, которые соответствуют их типам. В случае, если список не может быть полностью отображен в выделенной для него части интерфейса, сбоку компонента появляется полоса прокрутки. При нажатии на карточку ингридиента открывается модальное окно с крупным изображением и информацией о пищевой ценности. Вкладки в верхней части списка могут позволяют автоматически прокрутить его до нужной категории. Во время ручной прокрутки подсвечивается вкладка, соответствующая просматриваемому разделу.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+В секции состав заказа отображаются все добавленные пользователем позиции. Их добавление происходит по принципу Drag-and-drop при переносе ингредиентов мышью из описанного выше общего списка ингредиентов. В случае отсутствия достаточного места для полного отображения всех включенных в заказ позиций в разделе появляется полоса прокрутки. Первый и последний ингредиент находятся за пределами прокручиваемой области, всегда видны и не могут быть перемещены на другие места. Другие составляющие заказа меняются между собой местами при передвижении их мышкой. В нижней части компонента отображается итоговая стоимость составленного набора. Рядом расположена кнопка оформления заказа. Нажатие на кнопку приводит к открытию модального окна с подтверждением оформления и номером заказа.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Технологии:
 
-### `npm run build`
+- Шаблон приложения развернут с помощью create-react-app
+- Использована библиотека UI-компонентов Яндекс.Практикум.Реакт
+- Frontend приложения написан с использованием библиотеки React
+- Хранилище данных в браузере разработано на Redux
+- Лента заказов отражается при помощи Web Sockets
+- Для верстки использовался flex, css размещен в виде CSS Modules
+- Для тестирования приложения использовани Jest и Cypress
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+В качестве основы проекта применяется JavaScript библиотека для создания пользовательских интерфейсов React. Среди использованных в реализации компонентов имеются как специального созданные, так и уже готовые. Благодаря использованию технологии flexbox страница приложения подстраивается под размер окна браузера. Для хранения глобального состояния применяется хранилище Redux с расширением Thunk. Функционал Drag-and-drop реализован с применением библиотеки React DnD.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Особенности
 
-### `npm run eject`
+Проект запускается локально по адресу http://localhost:3000/ путем клонирования данного репозитория и последовательного запуска команд в терминале (должны быть установлены программы Git, NodeJS и менеджер пакетов npm):
+git clone https://github.com/MedaDanila1407/yandex.git
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+cd react-burger
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+npm run start
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+npm test //для тестирования:
 
-## Learn More
+npm run cypress:open //для тестирования:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Начало работы с Create React App
+
+Этот проект был запущен с [Create React App](https://github.com/facebook/create-react-app).
+
+#### Доступные скрипты
+
+В каталоге проекта вы можете запустить:
+
+- ##### `npm start` - запустить проект,
+
+- ##### `npm test` - протестировать проект,
+
+- ##### `npm run build` - собрать проект.
+
+Создает приложение для производства в папке "build".\
+Он правильно связывает React в рабочем режиме и оптимизирует сборку для достижения наилучшей производительности.
