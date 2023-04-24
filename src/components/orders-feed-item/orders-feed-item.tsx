@@ -1,10 +1,7 @@
-import React from "react";
-import styles from "./orders-feed-item.module.css";
-import {
-  CurrencyIcon,
-  FormattedDate,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { TIngredient, useAppSelector } from "../../services/types";
+import React from 'react';
+import styles from './orders-feed-item.module.css';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TIngredient, useAppSelector } from '../../services/types';
 
 interface IOrdersFeedItem {
   createdAt: string;
@@ -25,17 +22,13 @@ const OrdersFeedItem = ({
   status,
   updatedAt,
   _id,
-  displayStatus,
+  displayStatus
 }: IOrdersFeedItem) => {
-  const { allIngredients } = useAppSelector(
-    (store) => store.burgerConstructorReducer
-  );
+  const { allIngredients } = useAppSelector(store => store.burgerConstructorReducer);
 
   let orderIngredients: TIngredient[] = [];
-  ingredients.forEach((currentItem) => {
-    let currentIngredient = allIngredients.find(
-      (item: TIngredient) => item._id === currentItem
-    );
+  ingredients.forEach(currentItem => {
+    let currentIngredient = allIngredients.find((item: TIngredient) => item._id === currentItem);
     if (currentIngredient) {
       orderIngredients.push(currentIngredient);
     }
@@ -56,14 +49,14 @@ const OrdersFeedItem = ({
 
   const formatStatus = (status: string) => {
     switch (status) {
-      case "created":
-        return "Создан";
-      case "pending":
-        return "Готовится";
-      case "done":
-        return "Выполнен";
+      case 'created':
+        return 'Создан';
+      case 'pending':
+        return 'Готовится';
+      case 'done':
+        return 'Выполнен';
       default:
-        return "Неизвестен";
+        return 'Неизвестен';
     }
   };
 
@@ -78,20 +71,14 @@ const OrdersFeedItem = ({
       <div>
         <div className="text text_type_main-medium">{name}</div>
         {displayStatus && (
-          <div className="text text_type_main-default mt-2">
-            {formatStatus(status)}
-          </div>
+          <div className="text text_type_main-default mt-2">{formatStatus(status)}</div>
         )}
       </div>
       <div className={styles.details}>
         <div className={styles.ingredients}>
           {previewIngredients.map((item, index) => (
             <div className={styles.preview} key={number + item._id + index}>
-              <img
-                src={item.image}
-                className={styles.previewImage}
-                alt={item.name}
-              />
+              <img src={item.image} className={styles.previewImage} alt={item.name} />
               {index === 5 && (
                 <div
                   className={`${styles.ingredients} text text_type_main-default`}
