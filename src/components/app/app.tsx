@@ -1,30 +1,30 @@
-import React, { useEffect, FC } from 'react';
-import styles from './app.module.css';
-import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
-import AppHeader from '../app-header/app-header';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import { Login } from '../../pages/login/login';
-import { RegisterPage } from '../../pages/register/register';
-import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password';
-import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
-import { ProfilePage } from '../../pages/profile/profile';
-import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
-import { MainPage } from '../../pages/main/main';
-import { ProtectedRoute } from '../protected-route/protected-route';
-import { getIngredients } from '../../services/action-creators/burgerConstructorActionCreators';
-import { getCookie } from '../../utils/cookies';
-import { getUser } from '../../services/action-creators/userActionCreators';
-import { useAppDispatch, useAppSelector } from '../../services/types/index';
-import { Location } from 'history';
-import { FeedPage } from '../../pages/feed/feed';
-import { OrdersPage } from '../../pages/orders/orders';
-import OrderInfo from '../orders-info/order-info';
+import React, { useEffect, FC } from "react";
+import styles from "./app.module.css";
+import { Route, Switch, useLocation, useHistory } from "react-router-dom";
+import AppHeader from "../app-header/app-header";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import { Login } from "../../pages/login/login";
+import { RegisterPage } from "../../pages/register/register";
+import { ForgotPasswordPage } from "../../pages/forgot-password/forgot-password";
+import { ResetPasswordPage } from "../../pages/reset-password/reset-password";
+import { ProfilePage } from "../../pages/profile/profile";
+import { NotFoundPage } from "../../pages/not-found-page/not-found-page";
+import { MainPage } from "../../pages/main/main";
+import { ProtectedRoute } from "../protected-route/protected-route";
+import { getIngredients } from "../../services/action-creators/burgerConstructorActionCreators";
+import { getCookie } from "../../utils/cookies";
+import { getUser } from "../../services/action-creators/userActionCreators";
+import { useAppDispatch, useAppSelector } from "../../services/types/index";
+import { Location } from "history";
+import { FeedPage } from "../../pages/feed/feed";
+import { OrdersPage } from "../../pages/orders/orders";
+import OrderInfo from "../orders-info/order-info";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
   const { isLoading, error, allIngredients } = useAppSelector(
-    store => store.burgerConstructorReducer
+    (store) => store.burgerConstructorReducer
   );
 
   const location = useLocation<{ background: Location }>();
@@ -32,7 +32,7 @@ const App: FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (getCookie('accessToken')) {
+    if (getCookie("accessToken")) {
       dispatch(getUser());
     }
     dispatch(getIngredients());
@@ -60,10 +60,18 @@ const App: FC = () => {
         <ProtectedRoute unAuthorizedOnly={true} path="/register" exact={true}>
           <RegisterPage />
         </ProtectedRoute>
-        <ProtectedRoute unAuthorizedOnly={true} path="/forgot-password" exact={true}>
+        <ProtectedRoute
+          unAuthorizedOnly={true}
+          path="/forgot-password"
+          exact={true}
+        >
           <ForgotPasswordPage />
         </ProtectedRoute>
-        <ProtectedRoute unAuthorizedOnly={true} path="/reset-password" exact={true}>
+        <ProtectedRoute
+          unAuthorizedOnly={true}
+          path="/reset-password"
+          exact={true}
+        >
           <ResetPasswordPage />
         </ProtectedRoute>
         <ProtectedRoute path="/profile" exact={true}>
@@ -107,7 +115,7 @@ const App: FC = () => {
             <Modal
               title="Детали ингредиента"
               onClose={() => {
-                history.replace({ pathname: '/' });
+                history.replace({ pathname: "/" });
               }}
             >
               <IngredientDetails />
@@ -117,7 +125,7 @@ const App: FC = () => {
           <Route path="/feed/:number" exact={true}>
             <Modal
               onClose={() => {
-                history.replace({ pathname: '/feed/' });
+                history.replace({ pathname: "/feed/" });
               }}
             >
               <OrderInfo />
@@ -127,7 +135,7 @@ const App: FC = () => {
           <Route path="/profile/orders/:number" exact={true}>
             <Modal
               onClose={() => {
-                history.replace({ pathname: '/profile/orders' });
+                history.replace({ pathname: "/profile/orders" });
               }}
             >
               <OrderInfo />

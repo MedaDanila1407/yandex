@@ -2,8 +2,8 @@ import { selectors } from '../support/selectors';
 
 describe('UI тесты', () => {
   beforeEach(() => {
-    const email = 'karvraburcar@kpjprd.rs';
-    const password = 'beograd';
+    const email = 'medanila@gmail.com';
+    const password = 'MedaDanila140700';
     cy.viewport(1400, 1000);
     cy.visit('/login');
     cy.get(selectors.login.emailField).type(`${email}`);
@@ -11,6 +11,6 @@ describe('UI тесты', () => {
   });
 
   it('Должно отображаться имя пользователя', () => {
-    cy.get(selectors.header.personalText).should('have.text', 'Karaburma');
+    cy.get(selectors.header.personalText).should('have.text', 'Данила');
   });
 });

@@ -2,8 +2,8 @@ import { selectors } from '../support/selectors';
 
 describe('Отправка заказа', () => {
   beforeEach(() => {
-    const email = 'karvraburcar@kpjprd.rs';
-    const password = 'beograd';
+    const email = 'medanila@gmail.com';
+    const password = 'MedaDanila140700';
     cy.viewport(1400, 1000);
     cy.visit('/login');
     cy.get('[data-testid=email_input]').type(`${email}`);
