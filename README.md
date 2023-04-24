@@ -64,6 +64,6 @@ npm run cypress:open //для тестирования:
 
 ---
 
-[Мой сайт доступен по адресу] (https://sasmus12.github.io/react-burger/)
+[Мой сайт доступен по адресу] (https://medadanila1407.github.io/yandex/)
 
 ---
